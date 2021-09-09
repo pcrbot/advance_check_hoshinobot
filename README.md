@@ -1,6 +1,9 @@
-# Advance_check_hoshinobot
+# Advance_check for Hoshinobot
 ***
-## bot服务器配置查询
+
+→→→ [前往更新日志](#更新日志)
+
+## bot服务器情况查询
 
 **默认文件夹名：advance_check**
 **默认服务名：advance_check**
@@ -26,24 +29,30 @@
 - 获取**磁盘**信息
 - 获取**显卡**信息
 - 获取**内存**信息
+- ~NEW!~ 获取**服务器当前全屏截图**信息  #**仅** 在 **Windows** 环境下可用。
 - ……
 
 
-需要 **@bot** 使用，当然你也可以自己改成无需@。在 **advance_check.py** 文件里我做了详细的注释，小白也能看懂
+需要 **@bot** 使用，当然你也可以自己改成无需@。在 **advance_check.py** 文件里有着详细的注释
 
 ### 安装
 
 #### 通过github克隆
 
-在hoshino/modules文件夹中，打开cmd或者powershell，输入以下代码按回车执行：
+在 ``hoshino/modules`` 文件夹中，打开 ``cmd`` 或者 ``powershell`` ，输入以下代码按回车执行：
+
 ```powershell
 git clone https://github.com/Soung2279/advance_check_hoshinobot.git
 ```
-之后不要关闭cmd或powershell，输入以下代码安装依赖
+
+之后不要关闭 ``cmd`` 或 ``powershell`` ，输入以下代码安装依赖
+
 ```powershell
 py -3.8 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+# 如果你是python 3.9+，请改为 py -3.9 ......
 ```
-之后关闭cmd或powershell，在hoshino/config的`__bot__.py`文件中，在MODULES_ON = {}里添加advance_check
+
+之后关闭 ``cmd`` 或 ``powershell`` ，在 ``hoshino/config`` 的 `__bot__.py` 文件中，在 ``MODULES_ON = {}`` 里添加 "advance_check"
 ```python
 # 启用的模块
 MODULES_ON = {
@@ -57,12 +66,17 @@ MODULES_ON = {
 
 #### 直接安装
 
-直接下载本文件夹（advance_check），将其放入hoshino/modules中，并安装依赖[WMI](https://pypi.org/project/WMI/)
-提供如下安装依赖代码，可直接复制到cmd/powershell当中，按回车执行。
+直接下载本文件夹（advance_check），将其放入hoshino/modules中，并安装依赖 [WMI](https://pypi.org/project/WMI/)
+
+提供如下安装依赖代码，可直接复制到 ``cmd/powershell`` 当中，按回车执行。
+
 ```powershell
 py -3.8 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+# 如果你是python 3.9+，请改为 py -3.9 ......
 ```
-之后关闭cmd或powershell，在hoshino/config的`__bot__.py`文件中，在MODULES_ON = {}里添加advance_check
+
+之后关闭 ``cmd`` 或 ``powershell`` ，在 ``hoshino/config`` 的 `__bot__.py` 文件中，在 ``MODULES_ON = {}`` 里添加 "advance_check"
+
 ```python
 # 启用的模块
 MODULES_ON = {
@@ -77,11 +91,18 @@ MODULES_ON = {
 ### 指令
 
 - **`[@bot adcheck/鲁大师/看看配置/看看服务器/adck]`** 看看服务器硬件配置
+
 - **`[帮助advance_check]`** 查看详情
 
-### 可自定义内容
+- **`[服务器截图/bot截图]`** 查看当前时间服务器全屏截图  #**仅** 在 **Windows** 环境下可用。
 
-在 **[advance_check.py](https://github.com/Soung2279/advance_check_hoshinobot/advance_check.py)** 文件的第 **19-23** 行可自行设置是否启用**合并转发**和**定时撤回**功能
+- **`[清理adck/清除adck]`**  清空截图文件夹
+
+- **`[启用adcheck_push]`**  启用定时推送服务，将于每日特定时间推送全屏截图给**超级管理员**
+
+### 自定义内容
+
+在 **[advance_check.py](https://github.com/Soung2279/advance_check_hoshinobot/advance_check.py)** 文件的第 **22-26** 行可自行设置是否启用**合并转发**和**定时撤回**功能
 
 ```python
 forward_msg_exchange = 1  #是否启用合并转发。1是启用，0是禁用
@@ -91,7 +112,29 @@ recall_msg_set = 1  #是否启用定时撤回。1是启用，0是禁用
 RECALL_MSG_TIME = 30  #撤回前的时长，单位s
 ```
 
->还有一些其它的可以自己改的我都写在文件注释里面了。根据注释说明自己改吧~（保持原样也可以使用！）
+~NEW!~ 在 **[advance_check.py](https://github.com/Soung2279/advance_check_hoshinobot/advance_check.py)** 文件的第 **213，214和232** 行需同步设置**截图存放路径**
+
+```python
+    shots_all_num = countFile(str(main_path+"img/advance_check/"))  #同上
+    shots_all_size = getdirsize(f"{main_path}img/advance_check/")  #同上
+...
+    after_size = getdirsize(f"{main_path}img/advance_check/")  #同上
+```
+
+~NEW!~ 同理，在 **[advance_check.py](https://github.com/Soung2279/advance_check_hoshinobot/advance_check.py)** 文件的第 **205** 行可自行设置**截图存放路径**
+
+>默认的截图存放为 你的资源库目录/img/advance_check/
+>例如: C:/Resources/img/advance_check/
+
+在 **[advance_check.py](https://github.com/Soung2279/advance_check_hoshinobot/advance_check.py)** 文件的第 **394，410和426** 行可自行设置**每日推送时间**
+
+```python
+@svadpush.scheduled_job('cron', hour='9', minute='30')  #每天9:30推送
+...
+@svadpush.scheduled_job('cron', hour='14', minute='30')  #每天14:30推送
+...
+@svadpush.scheduled_job('cron', hour='20', minute='30')  #每天20:30推送
+```
 
 ### 其它
 
@@ -102,3 +145,15 @@ made by [Soung2279@Github](https://github.com/Soung2279/)
 ### 鸣谢
 
 灵感来源：自检[check](https://github.com/pcrbot/Hoshino-plugin-transplant#%E8%87%AA%E6%A3%80)  作者 **[Watanabe-Asa](https://github.com/Watanabe-Asa?tab=repositories)**
+
+### 更新日志
+
+2021-9-10
+
+【新增】
+获取服务器当前全屏截图，支持手动查询和自动推送，需安装依赖 shutil ，需为 Windows 环境。
+截图文件夹默认为 /img/advance_check/，可[前往自定义内容](#自定义内容)查看更改
+推送时间默认为 每天9：30，14：30和20：30推送。可[前往自定义内容](#自定义内容)查看更改
+
+【更新】
+部分逻辑代码优化。
